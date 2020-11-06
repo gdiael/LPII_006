@@ -24,12 +24,17 @@ public class Main {
 		
 		int elements [] ={8,4,12,2,6,10,14,1,3,5,7,9,11,13,15};
 		tree = new BinarySearchTree();
+		System.out.println(tree);
+		System.out.println("Inicializando Arvore:");
 		for (int x : elements) {
 			tree.add(x);
 		}
-			
+		System.out.println(tree);
+
 		System.out.println(tree.height()); //TODO print
+		System.out.println("AVL? : " + Boolean.toString(tree.isAVL()));
 		tree.preOrder(visitor);
+		System.out.println("");
 		tree.inOrder(visitor);
 	}
 }

@@ -204,4 +204,10 @@ public class BinarySearchTree {
 			}
 		}
 	}
+
+	// Converte os valores da lista para string
+	public String toString(){
+		if(this.isEmpty()) return "Arvore vazia!";
+        return root.subTreeString("");
+	}
 }
