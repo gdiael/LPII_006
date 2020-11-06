@@ -17,23 +17,60 @@ public class BinarySearchTree {
 		}
 	}
 
+	private int nodeHeghtByChildren(Node node){
+		int heghtE = node.hasLeft() ? node.left.height : 0;
+		int heghtD = node.hasRight() ? node.right.height : 0;
+		return 1 + Math.max(heghtE, heghtD);
+	}
+
 	public boolean add(int value) {
 		if (isEmpty()) {
-			root = new Node(value);
+			this.root = new Node(value);
+			this.root.height = 1;
+			return true;
 		} else {
-			Node node = getNode(root, value);
-			if (value < node.value) {
-				node.left = new Node(value);
-			} else if (value > node.value) {
-				node.right = new Node(value);
+			return this.add(this.root, value);
+		}
+	}
+
+	private boolean add(Node node, int value){
+		boolean wasAdd = false;
+		if (value < node.value) {
+			if(node.hasLeft()){
+				wasAdd = add(node.left, value);
 			} else {
-				return false;
+				node.left = new Node(value);
+				node.left.height = 1;
+				wasAdd = true;
+			}
+		} else if(value > node.value) {
+			if(node.hasRight()){
+				wasAdd = add(node.right, value);
+			} else {
+				node.right = new Node(value);
+				node.right.height = 1;
+				wasAdd = true;
 			}
 		}
-		updateHeight(root);
-		return true;
+		if(wasAdd){
+			node.height = nodeHeghtByChildren(node);
+		}
+		return wasAdd;
 	}
-	
+
+	private boolean isAVL(Node node){
+		if(node == null) return true;
+		int heightE = node.hasLeft() ? node.left.height : 0;
+		int heightD = node.hasRight() ? node.right.height : 0;
+		if(node.height != 1 + Math.max(heightD, heightE)) return false;
+		if(Math.abs(heightE - heightD) > 1) return false;
+		return (node.hasLeft() ? isAVL(node.left) : true) && (node.hasRight() ? isAVL(node.right) : true);
+	}
+
+	public boolean isAVL(){
+		return this.isAVL(this.root);
+	}
+
 	private int updateHeight(Node node){
 		if(node == null){
 			return 0;

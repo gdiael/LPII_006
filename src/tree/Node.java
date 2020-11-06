@@ -25,6 +25,14 @@ public class Node {
 		return right != null;
 	}
 
+	public int getHeght(){
+		return this.height;
+	}
+
+	public void setHeght(int value){
+		this.height = value;
+	}
+
 	public String toString() {
 		return Integer.toString(value);
 	}
